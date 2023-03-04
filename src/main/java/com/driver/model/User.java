@@ -1,33 +1,34 @@
 package com.driver.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String username;
     private String password;
     private String originalIp;
     private String maskedIp;
-    private boolean connected;
-
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
-    private List<Connection> connectionList=new ArrayList<>();
+    private Boolean connected;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Connection> connectionList;
 
     @ManyToMany
     @JoinColumn
-    private List<ServiceProvider> serviceProviderList=new ArrayList<>();
+    private List<ServiceProvider> serviceProviderList;
 
-    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
-    private Country OriginalCountry;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Country originalCountry;
+
 
     public User() {
     }
+
 
     public int getId() {
         return id;
@@ -69,11 +70,11 @@ public class User {
         this.maskedIp = maskedIp;
     }
 
-    public boolean getConnected() {
+    public Boolean getConnected() {
         return connected;
     }
 
-    public void setConnected(boolean connected) {
+    public void setConnected(Boolean connected) {
         this.connected = connected;
     }
 
@@ -94,10 +95,10 @@ public class User {
     }
 
     public Country getOriginalCountry() {
-        return OriginalCountry;
+        return originalCountry;
     }
 
     public void setOriginalCountry(Country originalCountry) {
-        this.OriginalCountry = originalCountry;
+        this.originalCountry = originalCountry;
     }
 }
