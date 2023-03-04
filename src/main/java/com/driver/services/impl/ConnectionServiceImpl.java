@@ -25,10 +25,10 @@ public class ConnectionServiceImpl implements ConnectionService {
         ServiceProvider serviceProvider1=null;
         Country country1=null;
         boolean isPossible=false;
-        if(user.isConnected()==true){
+        if(user.getConnected()==true){
             throw new Exception("Already connected");
         }
-        else if(user.getCountry().getCountryName().equals(countryName)){
+        else if(user.getOriginalCountry().getCountryName().equals(countryName)){
             return user;
         }
         else{
@@ -81,7 +81,7 @@ public class ConnectionServiceImpl implements ConnectionService {
     public User disconnect(int userId) throws Exception {
         User user=userRepository2.findById(userId).get();
 
-        if(user.isConnected()==false){
+        if(user.getConnected()==false){
             throw new Exception("Already disconnected");
         }
         else{
@@ -96,10 +96,10 @@ public class ConnectionServiceImpl implements ConnectionService {
         User sender=userRepository2.findById(senderId).get();
         User receiver=userRepository2.findById(receiverId).get();
 
-        if(receiver.isConnected()==true){
-            String countryCode=receiver.getCountry().getCode();
+        if(receiver.getConnected()==true){
+            String countryCode=receiver.getOriginalCountry().getCode();
 
-            if(countryCode.equals(sender.getCountry().getCode())){
+            if(countryCode.equals(sender.getOriginalCountry().getCode())){
                 return sender;
             }
             else{
@@ -117,7 +117,7 @@ public class ConnectionServiceImpl implements ConnectionService {
                     countryName = CountryName.AUS.toString();
 
                 User user=connect(senderId,countryName);
-                if(!user.isConnected()){
+                if(!user.getConnected()){
                     throw new Exception("Cannot establish communication");
                 }
                 else{
@@ -126,12 +126,12 @@ public class ConnectionServiceImpl implements ConnectionService {
             }
         }
         else{
-            if(receiver.getCountry().equals(sender.getCountry())){
+            if(receiver.getOriginalCountry().equals(sender.getOriginalCountry())){
                 return sender;
             }
-            String countryName=receiver.getCountry().getCountryName().toString();
+            String countryName=receiver.getOriginalCountry().getCountryName().toString();
             User user=connect(senderId,countryName);
-            if(!user.isConnected()){
+            if(!user.getConnected()){
                 throw new Exception("Cannot establish communication");
             }
             else{

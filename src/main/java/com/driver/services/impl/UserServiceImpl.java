@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
         user.setConnected(false);
 
 
-        user.setCountry(country);
+        user.setOriginalCountry(country);
 
         userRepository3.save(user);
 
@@ -48,9 +48,9 @@ public class UserServiceImpl implements UserService {
 
         ServiceProvider serviceProvider=serviceProviderRepository3.findById(serviceProviderId).get();
 
-        List<User> userList=serviceProvider.getUserList();
+        List<User> userList=serviceProvider.getUsers();
         userList.add(user);
-        serviceProvider.setUserList(userList);
+        serviceProvider.setUsers(userList);
 
         List<ServiceProvider> serviceProviderList=user.getServiceProviderList();
         serviceProviderList.add(serviceProvider);
