@@ -25,7 +25,7 @@ public class ConnectionServiceImpl implements ConnectionService {
         ServiceProvider serviceProvider1=null;
         Country country1=null;
         boolean isPossible=false;
-        if(user.getConnected()==true){
+        if(user.getConnected()){
             throw new Exception("Already connected");
         }
         else if(user.getOriginalCountry().getCountryName().equals(countryName)){
@@ -50,7 +50,7 @@ public class ConnectionServiceImpl implements ConnectionService {
                     }
                 }
             }
-            if(isPossible==false){
+            if(isPossible){
                 throw new Exception("Unable to connect");
             }
             else{
@@ -96,7 +96,7 @@ public class ConnectionServiceImpl implements ConnectionService {
         User sender=userRepository2.findById(senderId).get();
         User receiver=userRepository2.findById(receiverId).get();
 
-        if(receiver.getConnected()==true){
+        if(receiver.getConnected()){
             String countryCode=receiver.getOriginalCountry().getCode();
 
             if(countryCode.equals(sender.getOriginalCountry().getCode())){
